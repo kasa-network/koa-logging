@@ -1,0 +1,68 @@
+{
+  "name": "@kasa/koa-logging",
+  "version": "0.1.0",
+  "description": "A middleware that logs request and response in Koa",
+  "homepage": "https://github.com/kasa-network/koa-logging",
+  "author": {
+    "name": "Kasa Engineering",
+    "email": "dev@kasa.network",
+    "url": "http://www.kasa.network"
+  },
+  "contributors": [
+    {
+      "name": "Byungjin Park",
+      "email": "posquit0.bj@gmail.com",
+      "url": "http://www.posquit0.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kasa-network/koa-logging.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kasa-network/koa-logging/issues"
+  },
+  "keywords": [
+    "kasa",
+    "koa",
+    "koa2",
+    "koa-middleware",
+    "koa2-middleware",
+    "request-log",
+    "response-log",
+    "error-log",
+    "pino",
+    "logging",
+    "log"
+  ],
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "files": [
+    "index.js",
+    "lib/"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "release": "standard-version",
+    "test": "NODE_ENV=test jest --verbose",
+    "test:watch": "npm test -- --watch",
+    "test:coverage": "npm test -- --coverage",
+    "lint": "eslint lib test",
+    "lint:lib": "eslint lib",
+    "lint:test": "eslint test"
+  },
+  "dependencies": {
+    "debug": "^4.1.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "eslint": "^5.7.0",
+    "eslint-config-kasa": "^0.1.3",
+    "jest": "^23.4.1",
+    "jest-extended": "^0.11.0",
+    "jest-junit": "^5.2.0",
+    "standard-version": "^4.4.0"
+  }
+}
