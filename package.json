@@ -46,7 +46,7 @@
   "main": "index.js",
   "scripts": {
     "release": "standard-version",
-    "test": "NODE_ENV=test jest --verbose",
+    "test": "NODE_ENV=test jest --verbose --passWithNoTests",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
     "lint": "eslint lib test",
