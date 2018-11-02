@@ -1,6 +1,6 @@
 {
   "name": "@kasa/koa-logging",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A middleware that logs request and response in Koa",
   "homepage": "https://github.com/kasa-network/koa-logging",
   "author": {
