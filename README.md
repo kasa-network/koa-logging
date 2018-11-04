@@ -48,13 +48,109 @@ $ yarn add @kasa/koa-logging
 
 ## Usage
 
+Use `koa-request-id` as a middleware for a [koa](https://github.com/koajs/koa) app. By default, it writes logs into `stdin` for HTTP requests, responses and errors. Every log include the request id, which logger will try to get from common places such as `ctx.reqId`, `ctx.state.reqId`, `ctx.req.id`.
+
+In the following example, you can check the request and response logs from `stdin`:
+
+```js
+// app.js
+const Koa = require('koa');
+const requestId = require('@kasa/koa-request-id');
+const logging = require('@kasa/koa-logging');
+const pino = require('pino');
+const app = new Koa();
+
+app.use(requestId());
+app.use(logging({ logger: pino() }));
+app.use(async ctx => {
+  ctx.body = 'Hello, logging!';
+});
+
+app.listen(3000);
+```
+
+```bash
+$ node app.js || pino-pretty -c -l -t
+```
+
+```bash
+$ curl -X POST http://localhost:3000/users
+```
+
+```bash
+INFO [2018-11-04 09:54:00.596 +0000] (app/15600 on my-macbook): POST /users (4f83e15b-c34c-4f8c-9f57-938e54e54ae3)
+    reqId: "4f83e15b-c34c-4f8c-9f57-938e54e54ae3"
+    req: {
+      "method": "POST",
+      "path": "/users",
+      "url": "/users",
+      "headers": {
+        "host": "localhost:3000",
+        "user-agent": "curl/7.54.0",
+        "accept": "*/*"
+      },
+      "protocol": "http",
+      "ip": "127.0.0.1",
+      "query": {}
+    }
+    event: "request"
+```
+
 
 ## API
 
 ### Creating an middleware
 
+You can create a new logging middleware by passing the existing pino logger and the relevant options to `logging`;
+
+```node
+const logger = pino();
+const middleware = logging({
+  logger,
+  serializers: {},
+  overrideSerializers: true,
+  getReqId: (ctx) => ctx.reqId,
+  getRequestLogLevel: (ctx) => 'info',
+  getResponseLogLevel: (ctx) => ctx.state >= 500 ? 'error' : 'info',
+  getErrorLogLevel: (err) => 'error'
+});
+```
 
 ### Middleware Configuration
+
+These are the available config options for the middleware. All is optional except `logger`.
+
+```node
+{
+  // Logger instance of pino
+  logger: pino(),
+
+  // Serializers to override defaults provided
+  serializers: {
+    req: (ctx) => ({
+      ...
+    }),
+    user: (ctx) => ({
+      ...
+    })
+  },
+
+  // Ovveride serializers if true (default: true)
+  overrideSerializers: true,
+
+  // Function to get the request id from `ctx`
+  getReqId: (ctx) => ctx.reqId,
+
+  // Function to decide log level of the request from `ctx`
+  getRequestLogLevel: (ctx) => 'info',
+
+  // Function to decide log level of the response from `ctx`
+  getResponseLogLevel: (ctx) => ctx.state >= 500 ? 'error' : 'info',
+
+  // Function to decide log level of the error from `err`
+  getErrorLogLevel: (err) => 'error'
+}
+```
 
 
 ## Contributing
