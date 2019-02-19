@@ -39,7 +39,6 @@ $ npm install --save @kasa/koa-logging
 $ yarn add @kasa/koa-logging
 ```
 
-
 ### Dependencies
 
 - [**Koa**](https://github.com/koajs/koa) 2.0+
