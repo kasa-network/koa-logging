@@ -147,7 +147,10 @@ These are the available config options for the middleware. All is optional excep
   getResponseLogLevel: (ctx) => ctx.state >= 500 ? 'error' : 'info',
 
   // Function to decide log level of the error from `err`
-  getErrorLogLevel: (err) => 'error'
+  getErrorLogLevel: (err) => 'error',
+
+  // List of paths to be ignored.
+  ignorePaths: ['/healthcheck', '/readiness']
 }
 ```
 
